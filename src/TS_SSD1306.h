@@ -243,6 +243,8 @@ private:
   uint8_t m_i2cAddr;
   uint8_t m_nData;
   
+private:
+  uint8_t *buffer;
 };
 
 #endif /* _TS_SSD1306_H_ */
