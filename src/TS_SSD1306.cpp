@@ -24,12 +24,12 @@ All text above, and the splash screen below must be included in any redistributi
 
 //#include <stdlib.h>
 
-#include "Cytron_SSD1306.h"
+#include "TS_SSD1306.h"
 
-Cytron_SSD1306::Cytron_SSD1306():SSD1306Ascii(){
+TS_SSD1306::TS_SSD1306():SSD1306Ascii(){
 }
 
-void Cytron_SSD1306::invertDisplay(uint8_t i) {
+void TS_SSD1306::invertDisplay(uint8_t i) {
   if (i) {
     ssd1306WriteCmd(SSD1306_INVERTDISPLAY);
   } else {
@@ -41,7 +41,7 @@ void Cytron_SSD1306::invertDisplay(uint8_t i) {
 // Activate a right handed scroll for rows start through stop
 // Hint, the display is 16 rows tall. To scroll the whole display, run:
 // display.scrollright(0x00, 0x0F)
-void Cytron_SSD1306::startscrollright(uint8_t start, uint8_t stop){
+void TS_SSD1306::startscrollright(uint8_t start, uint8_t stop){
   ssd1306WriteCmd(SSD1306_RIGHT_HORIZONTAL_SCROLL);
   ssd1306WriteCmd(0X00);
   ssd1306WriteCmd(start);
@@ -56,7 +56,7 @@ void Cytron_SSD1306::startscrollright(uint8_t start, uint8_t stop){
 // Activate a right handed scroll for rows start through stop
 // Hint, the display is 16 rows tall. To scroll the whole display, run:
 // display.scrollright(0x00, 0x0F)
-void Cytron_SSD1306::startscrollleft(uint8_t start, uint8_t stop){
+void TS_SSD1306::startscrollleft(uint8_t start, uint8_t stop){
   ssd1306WriteCmd(SSD1306_LEFT_HORIZONTAL_SCROLL);
   ssd1306WriteCmd(0X00);
   ssd1306WriteCmd(start);
@@ -71,7 +71,7 @@ void Cytron_SSD1306::startscrollleft(uint8_t start, uint8_t stop){
 // Activate a diagonal scroll for rows start through stop
 // Hint, the display is 16 rows tall. To scroll the whole display, run:
 // display.scrollright(0x00, 0x0F)
-void Cytron_SSD1306::startscrolldiagright(uint8_t start, uint8_t stop){
+void TS_SSD1306::startscrolldiagright(uint8_t start, uint8_t stop){
   ssd1306WriteCmd(SSD1306_SET_VERTICAL_SCROLL_AREA);
   ssd1306WriteCmd(0X00);
   ssd1306WriteCmd(SSD1306_LCDHEIGHT);
@@ -88,7 +88,7 @@ void Cytron_SSD1306::startscrolldiagright(uint8_t start, uint8_t stop){
 // Activate a diagonal scroll for rows start through stop
 // Hint, the display is 16 rows tall. To scroll the whole display, run:
 // display.scrollright(0x00, 0x0F)
-void Cytron_SSD1306::startscrolldiagleft(uint8_t start, uint8_t stop){
+void TS_SSD1306::startscrolldiagleft(uint8_t start, uint8_t stop){
   ssd1306WriteCmd(SSD1306_SET_VERTICAL_SCROLL_AREA);
   ssd1306WriteCmd(0X00);
   ssd1306WriteCmd(SSD1306_LCDHEIGHT);
@@ -101,14 +101,14 @@ void Cytron_SSD1306::startscrolldiagleft(uint8_t start, uint8_t stop){
   ssd1306WriteCmd(SSD1306_ACTIVATE_SCROLL);
 }
 
-void Cytron_SSD1306::stopscroll(void){
+void TS_SSD1306::stopscroll(void){
   ssd1306WriteCmd(SSD1306_DEACTIVATE_SCROLL);
 }
 
 // Dim the display
 // dim = true: display is dimmed
 // dim = false: display is normal
-void Cytron_SSD1306::dim(boolean dim) {
+void TS_SSD1306::dim(boolean dim) {
   uint8_t contrast;
 
   if (dim) {
@@ -122,7 +122,7 @@ void Cytron_SSD1306::dim(boolean dim) {
   ssd1306WriteCmd(contrast);
 }
 
-void Cytron_SSD1306::drawBitmap(int16_t x, int16_t y,
+void TS_SSD1306::drawBitmap(int16_t x, int16_t y,
  const uint8_t *bitmap, int16_t w, int16_t h, uint8_t color) {
 
   int16_t i, j;
@@ -160,22 +160,22 @@ void Cytron_SSD1306::drawBitmap(int16_t x, int16_t y,
   // }
 }
 
-/*void Cytron_SSD1306::drawPixel(int16_t x, int16_t y, uint16_t color) {
+void TS_SSD1306::drawPixel(int16_t x, int16_t y, uint16_t color) {
   // Bitmask tables of 0x80>>X and ~(0x80>>X), because X>>Y is slow on AVR
   static const uint8_t PROGMEM
     GFXsetBit[] = { 0x80, 0x40, 0x20, 0x10, 0x08, 0x04, 0x02, 0x01 },
     GFXclrBit[] = { 0x7F, 0xBF, 0xDF, 0xEF, 0xF7, 0xFB, 0xFD, 0xFE };
 
-    if((x < 0) || (y < 0) || (x >= _width) || (y >= _height)) return;
+    if((x < 0) || (y < 0) || (x >= 128) || (y >= 32)) return;
 
     //find out which row is the value of y
-    cursor_x = x;
-    cursor_y = y/(_width/8);
+    int16_t cursor_x = x;
+    int16_t cursor_y = y/(128/8);
     setCursor(cursor_x, cursor_y);
 
-    uint8_t *ptr = &buffer[(x / 8) + y * ((_width + 7) / 8)];
+    uint8_t *ptr = &buffer[(x / 8) + y * ((128 + 7) / 8)];
     if(color) *ptr |= pgm_read_byte(&GFXsetBit[x & 7]);
     else      *ptr &= pgm_read_byte(&GFXclrBit[x & 7]);
   }
-}*/
+/*}*/
 

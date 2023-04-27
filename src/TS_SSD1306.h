@@ -9,8 +9,8 @@ The original library is Written by Limor Fried/Ladyada  for Adafruit Industries.
 BSD license, check license.txt for more information
 All text above, and the splash screen below must be included in any redistribution
 *********************************************************************/
-#ifndef _CYTRON_SSD1306_H_
-#define _CYTRON_SSD1306_H_
+#ifndef _TS_SSD1306_H_
+#define _TS_SSD1306_H_
 
 #include "utility/AvrI2c.h"
 #include <SSD1306Ascii.h>
@@ -104,8 +104,8 @@ All text above, and the splash screen below must be included in any redistributi
     SSD1306_96_16
 
     -----------------------------------------------------------------------*/
-   #define SSD1306_128_64
-//   #define SSD1306_128_32
+//   #define SSD1306_128_64
+    #define SSD1306_128_32
 //   #define SSD1306_96_16
 /*=========================================================================*/
 
@@ -116,14 +116,14 @@ All text above, and the splash screen below must be included in any redistributi
   #error "At least one SSD1306 display must be specified in SSD1306.h"
 #endif
 
-#if defined SSD1306_128_64
-  #define SSD1306_LCDWIDTH                  128
-  #define SSD1306_LCDHEIGHT                 64
-#endif
-// #if defined SSD1306_128_32
+// #if defined SSD1306_128_64
 //   #define SSD1306_LCDWIDTH                  128
-//   #define SSD1306_LCDHEIGHT                 32
+//   #define SSD1306_LCDHEIGHT                 64
 // #endif
+#if defined SSD1306_128_32
+  #define SSD1306_LCDWIDTH                  128
+  #define SSD1306_LCDHEIGHT                 32
+#endif
 // #if defined SSD1306_96_16
 //   #define SSD1306_LCDWIDTH                  96
 //   #define SSD1306_LCDHEIGHT                 16
@@ -176,9 +176,9 @@ All text above, and the splash screen below must be included in any redistributi
 #define SSD1306_VERTICAL_AND_LEFT_HORIZONTAL_SCROLL 0x2A
 
 
-class Cytron_SSD1306 : public SSD1306Ascii {
+class TS_SSD1306 : public SSD1306Ascii {
  public:
-  Cytron_SSD1306();
+  TS_SSD1306();
 
   /**
    * @brief Initialize the display controller.
@@ -187,7 +187,7 @@ class Cytron_SSD1306 : public SSD1306Ascii {
    * @param[in] i2cAddr The I2C address of the display controller.
    * @param[in] fastMode Fast 400 kHz mode if true else standard 100 kHz mode.
    */
-  void begin(const DevType* dev = &Adafruit128x64, uint8_t i2cAddr = SSD1306_I2C_ADDRESS, bool fastMode = true) {
+  void begin(const DevType* dev = &Adafruit128x32, uint8_t i2cAddr = SSD1306_I2C_ADDRESS, bool fastMode = true) {
     m_nData = 0;
     m_i2cAddr = i2cAddr;
 
@@ -245,4 +245,4 @@ private:
   
 };
 
-#endif /* _CYTRON_SSD1306_H_ */
+#endif /* _TS_SSD1306_H_ */
